@@ -1,23 +1,41 @@
-import { Car } from "./Models/Car";
-import { SlotRepository } from "./Repositories/SlotRepository";
-import { SlotsManager } from "./SlotsManager";
-import { SlotStore } from "./Store/SlotStore";
+import { App } from "./App";
+import { createServer } from "http";
 
-const Store = new SlotStore(10);
-const Repository = new SlotRepository(Store);
-const Manager = new SlotsManager(Repository);
-Manager.ParkCar("ASD123");
+const server = createServer(App);
+const port = normalizePort(process.env.PORT!)
 
-Manager.ParkCar("ASD123");
+server.listen(port);
 
-Manager.ParkCar("ASD123123");
+function normalizePort(val: string): any {
+    let port = parseInt(val, 10);
+    if (isNaN(port)) return val;
+    if (port >= 0) return port;
+    return false;
+}
 
-console.log(Manager.UnparkCar("1"));
-console.log(JSON.stringify(Store.Slots));
+function onError(error: any) {
+    if (error.syscall !== "listen") throw error;
+    const bind = typeof port === "string" ?
+        "Pipe " + port :
+        "Port " + port;
+    switch (error.code) {
+        case "EACCES":
+            console.error(bind + ' requires elevated privileges');
+            process.exit(1);
+            break;
+        case 'EADDRINUSE':
+            console.error(bind + ' is already in use');
+            process.exit(1);
+            break;
+        default:
+            throw error;
+    }
 
-let test = Repository.FindSlotBySlotId("1");
-test!.ParkedCar = new Car("ASDASD");
-Repository.UpdateSlot(test!);
-
-console.log(JSON.stringify(Store.Slots));
-console.log(process.env.CAR_SLOTS);
+    function onListening() {
+        let addr = server.address();
+        var bind = typeof addr === 'string'
+            ? 'pipe ' + addr
+            : 'port ' + addr!.port;
+        console.log('Listening on ' + bind);
+    }
+}
