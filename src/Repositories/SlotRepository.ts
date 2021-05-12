@@ -29,6 +29,10 @@ export class SlotRepository {
         return query[0];
     }
 
+    public GetAllSlots(): Slot[] {
+        return this._slotStore.Slots;
+    }
+
     public UpdateSlot(slot: Slot): void {
         let index = Number(slot.Id) - 1;
         this._slotStore.Slots[index] = slot;
