@@ -5,6 +5,9 @@ const server = createServer(App);
 const port = normalizePort(process.env.PORT!)
 
 server.listen(port);
+server.on("error", onError);
+server.on("listening", onListening)
+
 
 function normalizePort(val: string): any {
     let port = parseInt(val, 10);
@@ -30,12 +33,12 @@ function onError(error: any) {
         default:
             throw error;
     }
+}
 
-    function onListening() {
-        let addr = server.address();
-        var bind = typeof addr === 'string'
-            ? 'pipe ' + addr
-            : 'port ' + addr!.port;
-        console.log('Listening on ' + bind);
-    }
+function onListening() {
+    let addr = server.address();
+    var bind = typeof addr === 'string'
+        ? 'pipe ' + addr
+        : 'port ' + addr!.port;
+    console.log('Listening on ' + bind);
 }
