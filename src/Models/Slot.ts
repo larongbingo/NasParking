@@ -6,7 +6,7 @@ export class Slot {
         this.Id = id;
     }
 
-    public Id: string;
+    public readonly Id: string;
     public ParkedCar: Car | null;
 
     public get IsUsed(): boolean {

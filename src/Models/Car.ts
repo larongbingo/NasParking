@@ -4,5 +4,5 @@ export class Car {
         this.PlateNumber =  plateNumber;
     }
 
-    public PlateNumber: string;
+    public readonly PlateNumber: string;
 }
