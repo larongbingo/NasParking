@@ -6,6 +6,10 @@ export const ParkCarController: RequestHandler = (req, res, next) => {
     try {
         const data: ParkCarDto = req.body;
         const isCarParked = slotsManager.ParkCar(data.CarPlateNumber)
+        if(!data.CarPlateNumber) {
+            res.status(400);
+            return res.json({message: "CarPlateNumber is empty"});
+        }
         if(isCarParked) {
             res.status(201);
             res.json(isCarParked);

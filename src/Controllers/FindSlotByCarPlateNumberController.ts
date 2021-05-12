@@ -6,6 +6,10 @@ export const FindSlotByCarPlateNumberController: RequestHandler = (req, res, nex
     try {
         const data: FindSlotByCarePlateNumberDto = req.body;
         const slot = slotRepository.FindSlotByCarPlateNumber(data.CarPlateNumber);
+        if(!data.CarPlateNumber) {
+            res.status(400);
+            return res.json({message: "CarPlateNumber is empty"});
+        }
         if(slot) {
             res.status(200);
             res.json(slot);
