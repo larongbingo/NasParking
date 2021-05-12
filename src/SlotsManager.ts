@@ -1,35 +1,34 @@
 import { Slot } from "./Models/Slot";
 import { Car } from "./Models/Car";
+import { SlotRepository } from "./Repositories/SlotRepository";
 
 export class SlotsManager {
-    public constructor(slotCount: number) {
-        for(let i = 0; i < slotCount; i++) 
-            this.Slots.push(new Slot(null, String(i + 1)));
+    public constructor(slotRepository: SlotRepository) {
+        this._slotRepository = slotRepository;
     }
 
-    public Slots: Slot[] = [];
-
+    private readonly _slotRepository: SlotRepository;
+    
     public ParkCar(carPlateNumber: string): Slot | null {
-        if(this.Slots.filter(slot => !slot.IsUsed).length === 0) return null;
-        if(this.Slots.filter(slot => slot.ParkedCar?.PlateNumber === carPlateNumber).length !== 0) return null;
-        
-        const emptyCarPark = this.Slots.filter(slot => !slot.IsUsed)[0];
-        const index = this.Slots.indexOf(emptyCarPark);
+        if(!this._slotRepository.FindSlotByParkedCarPlateNumber(carPlateNumber)) return null;
 
+        const emptyCarParks = this._slotRepository.FindSlotsByParkedStatus(false);
+        if(emptyCarParks.length !== 0) return null;
+
+        const emptyCarPark = emptyCarParks[0];
         emptyCarPark.ParkedCar = new Car(carPlateNumber);
-        this.Slots[index] = emptyCarPark;
+        this._slotRepository.UpdateSlot(emptyCarPark);
 
         return emptyCarPark;
     }
 
     public UnparkCar(slotIdToEmpty: string): boolean {
-        if(this.Slots.filter(slot => slot.Id === slotIdToEmpty).length === 0) return false;
+        const slotToEmpty = this._slotRepository.FindSlotBySlotId(slotIdToEmpty);
+        if(!slotToEmpty) return false;
 
-        const slotToEmpty = this.Slots.filter(slot => slot.Id === slotIdToEmpty)[0];
-        const index = this.Slots.indexOf(slotToEmpty);
-        
         slotToEmpty.ParkedCar = null;
-        this.Slots[index] = slotToEmpty;
+
+        this._slotRepository.UpdateSlot(slotToEmpty);
 
         return true;
     }
