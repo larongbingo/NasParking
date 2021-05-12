@@ -20,3 +20,4 @@ test!.ParkedCar = new Car("ASDASD");
 Repository.UpdateSlot(test!);
 
 console.log(JSON.stringify(Store.Slots));
+console.log(process.env.CAR_SLOTS);
