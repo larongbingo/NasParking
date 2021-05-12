@@ -5,6 +5,8 @@ import { GeneralErrorHandlingMiddleware } from "./Middlewares/GeneralErrorHandli
 
 export const App = Express();
 
+App.use(Express.json())
+
 App.use(Routes);
 
 App.use(Error404HandlingMiddleware);
