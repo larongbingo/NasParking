@@ -1,11 +1,12 @@
 import Express from "express";
 import { Routes } from "./Routes";
+import { Error404HandlingMiddleware } from "./Middlewares/Error404Handling";
+import { GeneralErrorHandlingMiddleware } from "./Middlewares/GeneralErrorHandling";
 
 export const App = Express();
 
 App.use(Routes);
 
-App.use((req, res) => {
-    res.json({message: "Route does not exist"});
-    res.status(404);
-});
+App.use(Error404HandlingMiddleware);
+
+App.use(GeneralErrorHandlingMiddleware);
