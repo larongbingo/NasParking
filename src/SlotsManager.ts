@@ -22,14 +22,15 @@ export class SlotsManager {
         return emptyCarPark;
     }
 
-    public UnparkCar(slotIdToEmpty: string): boolean {
+    public UnparkCar(slotIdToEmpty: string): Car | null {
         const slotToEmpty = this._slotRepository.FindSlotBySlotId(slotIdToEmpty);
-        if(!slotToEmpty) return false;
+        if(!slotToEmpty) return null;
 
+        const car = slotToEmpty.ParkedCar;
         slotToEmpty.ParkedCar = null;
 
         this._slotRepository.UpdateSlot(slotToEmpty);
 
-        return true;
+        return car;
     }
 }
