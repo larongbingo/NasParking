@@ -8,7 +8,7 @@ export class SlotRepository {
         this._slotStore = slotStore;
     }
 
-    public FindSlotByParkedCarPlateNumber(carPlateNumber: string): Slot | null {
+    public FindSlotByCarPlateNumber(carPlateNumber: string): Slot | null {
         let query = this._slotStore.Slots.filter(slot => slot.ParkedCar?.PlateNumber === carPlateNumber);
         if(query.length === 0) return null
         return query[0];

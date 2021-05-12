@@ -10,7 +10,7 @@ export class SlotsManager {
     private readonly _slotRepository: SlotRepository;
     
     public ParkCar(carPlateNumber: string): Slot | null {
-        if(this._slotRepository.FindSlotByParkedCarPlateNumber(carPlateNumber)) return null;
+        if(this._slotRepository.FindSlotByCarPlateNumber(carPlateNumber)) return null;
 
         const emptyCarParks = this._slotRepository.FindSlotsByParkedStatus(false);
         if(emptyCarParks.length === 0) return null;
