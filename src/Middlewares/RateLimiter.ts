@@ -10,7 +10,7 @@ const EXPIRES_IN = 1000 * 10;
 export const RateLimiterMiddleware: RequestHandler = (req, res, next) => {
     try {
         const lookups = req.connection.remoteAddress;
-        const key = "ratelimit:" + req.path + ":" + req.method.toLowerCase() + ":" + lookups;
+        const key = "ratelimit:" + lookups;
 
         const now = Date.now();
 
