@@ -30,7 +30,6 @@ describe("SlotsManager Unit Tests", () => {
         });
 
         it("Should return null when FindSlotsByParkedStatus returns an empty array", () => {
-            const slot = new Slot(new Car("TEST"), "1");
             stubbedSlotRepo.FindSlotByCarPlateNumber = sinon.stub().returns(null);
             stubbedSlotRepo.FindSlotsByParkedStatus = sinon.stub().returns([]);
 
@@ -39,8 +38,7 @@ describe("SlotsManager Unit Tests", () => {
             should().not.exist(result);
         });
 
-        it("Should return a Car instance when all conditions are met", () => {
-            const slot = new Slot(new Car("TEST"), "1");
+        it("Should return a Slot instance when all conditions are met", () => {
             stubbedSlotRepo.FindSlotByCarPlateNumber = sinon.stub().returns(null);
             stubbedSlotRepo.FindSlotsByParkedStatus = sinon.stub().returns([new Slot(null, "2")]);
             stubbedSlotRepo.UpdateSlot = sinon.spy();
