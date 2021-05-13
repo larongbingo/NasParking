@@ -1,13 +1,13 @@
 import { RequestHandler } from "express";
-import { limitRepository } from "../Instances";
 import { Limit } from "../Models/Limit";
+import { LimitRepository } from "../Repositories/LimitRepository";
 
 const TOTAL_REQUESTS = 10;
 const EXPIRES_IN = 1000 * 10;
 
 // based on https://github.com/ded/express-limiter; cant write shit xd
 // just removed redis specific stuff xd
-export const RateLimiterMiddleware: RequestHandler = (req, res, next) => {
+export const RateLimiterMiddleware: (limitRepository: LimitRepository) => RequestHandler = (limitRepository: LimitRepository) => (req, res, next) => {
     try {
         const lookups = req.connection.remoteAddress;
         const key = "ratelimit:" + lookups;
