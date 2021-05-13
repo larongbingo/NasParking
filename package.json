@@ -6,7 +6,7 @@
   "scripts": {
     "build": "tsc",
     "start": "tsc && node -r dotenv/config ./bin/index.js",
-    "test": "mocha './bin/Tests/**/*.js'"
+    "test": "tsc && mocha './bin/Tests/**/*.js'"
   },
   "author": "Renz Christen Yeomer A. Pagulayan",
   "license": "ISC",
@@ -15,9 +15,12 @@
     "express": "^4.17.1"
   },
   "devDependencies": {
+    "@types/chai": "^4.2.18",
     "@types/express": "^4.17.11",
     "@types/mocha": "^8.2.2",
+    "@types/sinon": "^10.0.0",
     "chai": "^4.3.4",
-    "mocha": "^8.4.0"
+    "mocha": "^8.4.0",
+    "sinon": "^10.0.0"
   }
 }
